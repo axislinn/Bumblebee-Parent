@@ -6,33 +6,36 @@ import 'package:bumblebee/data/repository/repositories/user_repository.dart';
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final UserRepository userRepository;
 
-  RegisterBloc({required this.userRepository}) : super(RegisterInitial());
+  RegisterBloc({required this.userRepository}) : super(RegisterInitial()) {
+    // Registering the event handler using on<RegisterButtonPressed>
+    on<RegisterButtonPressed>(_onRegisterButtonPressed);
+  }
 
-  @override
-  Stream<RegisterState> mapEventToState(RegisterEvent event) async* {
-    if (event is RegisterButtonPressed) {
-      yield RegisterLoading();
-
-      try {
-        if (event.password != event.confirmPassword) {
-          yield RegisterFailure(error: 'Passwords do not match');
-          return;
-        }
-
-        final user = await userRepository.register(
-          userName: event.userName,
-          email: event.email,
-          password: event.password,
-          confirmedPassword: event.confirmPassword,
-          phone: event.phone,
-          roles: event.roles,
-          relationship: event.relationship,
-        );
-
-        yield RegisterSuccess(user: user);
-      } catch (error) {
-        yield RegisterFailure(error: error.toString());
+  // The event handler for RegisterButtonPressed
+  void _onRegisterButtonPressed(
+    RegisterButtonPressed event,
+    Emitter<RegisterState> emit,
+  ) async {
+    emit(RegisterLoading());
+    try {
+      if (event.password != event.confirmPassword) {
+        emit(RegisterFailure(error: 'Passwords do not match'));
+        return;
       }
+
+      final user = await userRepository.register(
+        userName: event.userName,
+        email: event.email,
+        password: event.password,
+        confirmedPassword: event.confirmPassword,
+        phone: event.phone,
+        roles: event.roles,
+        relationship: event.relationship,
+      );
+
+      emit(RegisterSuccess(user: user));
+    } catch (error) {
+      emit(RegisterFailure(error: error.toString()));
     }
   }
 }

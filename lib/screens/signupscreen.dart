@@ -23,7 +23,7 @@ class RegisterScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Register'),
       ),
-      body: BlocProvider(
+      body: BlocProvider<RegisterBloc>(
         create: (context) => RegisterBloc(userRepository: userRepository),
         child: BlocListener<RegisterBloc, RegisterState>(
           listener: (context, state) {
@@ -75,21 +75,27 @@ class RegisterScreen extends StatelessWidget {
                   decoration: InputDecoration(labelText: 'Relationship'),
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    BlocProvider.of<RegisterBloc>(context).add(
-                      RegisterButtonPressed(
-                        userName: _userNameController.text,
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                        confirmPassword: _confirmPasswordController.text,
-                        phone: _phoneController.text,
-                        roles: _rolesController.text,
-                        relationship: _relationshipController.text,
-                      ),
+                Builder(
+                  builder: (context) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        // Now the context inside this Builder will have access to the RegisterBloc
+                        final registerBloc = BlocProvider.of<RegisterBloc>(context);
+                        registerBloc.add(
+                          RegisterButtonPressed(
+                            userName: _userNameController.text,
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            confirmPassword: _confirmPasswordController.text,
+                            phone: _phoneController.text,
+                            roles: _rolesController.text,
+                            relationship: _relationshipController.text,
+                          ),
+                        );
+                      },
+                      child: Text('Register'),
                     );
                   },
-                  child: Text('Register'),
                 ),
               ],
             ),
