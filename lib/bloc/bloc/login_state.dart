@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:bumblebee/models/user_model.dart';
 import 'package:equatable/equatable.dart';
 
