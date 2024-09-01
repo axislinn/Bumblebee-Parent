@@ -1,11 +1,11 @@
+import 'package:bumblebee/screens/home_screen.dart';
+import 'package:bumblebee/screens/signupscreen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bumblebee/bloc/bloc/login_bloc.dart';
 import 'package:bumblebee/bloc/bloc/login_event.dart';
 import 'package:bumblebee/bloc/bloc/login_state.dart';
 import 'package:bumblebee/data/repository/repositories/user_repository.dart';
-import 'package:bumblebee/screens/signupscreen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -23,9 +23,11 @@ class LoginScreen extends StatelessWidget {
         child: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
-              // Handle login success (navigate to another screen)
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Welcome, ${state.user.name}!')),
+                SnackBar(content: Text('Welcome, ${state.user.userName}!')),
               );
             } else if (state is LoginFailure) {
               ScaffoldMessenger.of(context).showSnackBar(

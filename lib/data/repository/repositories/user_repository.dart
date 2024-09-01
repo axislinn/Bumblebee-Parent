@@ -1,23 +1,60 @@
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import 'package:bumblebee/models/user_model.dart';
 
 class UserRepository {
-  // Simulate user data fetching and authentication
+  final String baseUrl = 'https://bumblebeeflutterdeploy-production.up.railway.app';
 
+    // Method for login
   Future<UserModel> authenticate({required String email, required String password}) async {
-    await Future.delayed(Duration(seconds: 2)); // Simulate network delay
+    final url = Uri.parse('$baseUrl/login'); 
 
-    // Simulate authentication success/failure
-    if (email == 'test@test.com' && password == 'password') {
-      return UserModel(id: '1', email: email, name: 'Test User');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'email': email,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return UserModel.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Invalid credentials');
+      throw Exception('Failed to login: ${response.body}');
     }
   }
+  // Method for register
+  Future<UserModel> register({
+    required String userName,
+    required String email,
+    required String password,
+    required String confirmedPassword,
+    required String phone,
+    required String roles,
+    required String relationship,
+  }) async {
+    final url = Uri.parse('$baseUrl/register');
+    
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'userName': userName,
+        'email': email,
+        'password': password,
+        'confirmedPassword': confirmedPassword,
+        'phone': phone,
+        'roles': roles,
+        'relationship': relationship,
+      }),
+    );
 
-  Future<UserModel> register({required String email, required String password, required String name}) async {
-    await Future.delayed(Duration(seconds: 2)); // Simulate network delay
-
-    // Simulate successful registration
-    return UserModel(id: '2', email: email, name: name);
+    if (response.statusCode == 200) {
+      return UserModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to register user: ${response.body}');
+    }
   }
 }
