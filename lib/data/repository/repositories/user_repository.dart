@@ -8,9 +8,9 @@ class UserRepository {
 
   // Method for login
   Future<UserModel> authenticate({required String email, required String password}) async {
-    //final url = Uri.parse('$baseUrl/userLogin'); // Updated to match provided function
+    final url = Uri.parse('$baseUrl/api/auth/login'); // Updated to match provided function
     //final url = Uri.parse('$baseUrl/http://192.168.100.179:3000/userLogin');
-    final url = Uri.parse('http://192.168.100.179:3000/userLogin');
+    //final url = Uri.parse('http://192.168.100.179:3000/userLogin');
 
     final response = await http.post(
       url,
@@ -44,9 +44,9 @@ class UserRepository {
     required String roles,
     required String relationship,
   }) async {
-    //final url = Uri.parse('$baseUrl/userRegister'); // Updated to match provided function
+    final url = Uri.parse('$baseUrl/api/auth/register'); // Updated to match provided function
     //final url = Uri.parse('$baseUrl/http://192.168.100.179:3000/userRegister');
-    final url = Uri.parse('http://192.168.100.179:3000/userRegister');
+    //final url = Uri.parse('http://192.168.100.179:3000/userRegister');
 
     final response = await http.post(
       url,
