@@ -1,6 +1,7 @@
+import 'package:bumblebee/presentation/routes/generated_routes.dart';
 import 'package:bumblebee/screens/splashscreen.dart';
 import 'package:flutter/material.dart';
- // Adjust the import path if needed
+// Adjust the import path if needed
 
 void main() {
   runApp(MyApp());
@@ -15,7 +16,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SplashScreen(), // Make sure this screen exists and is correctly implemented
+      // home: SplashScreen(), // Make sure this screen exists and is correctly implemented
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator().generateRoute,
     );
   }
 }
