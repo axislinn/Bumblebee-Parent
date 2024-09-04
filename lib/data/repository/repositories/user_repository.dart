@@ -7,9 +7,10 @@ import 'package:bumblebee/models/user_model.dart';
 class UserRepository {
   final String baseUrl = 'https://bumblebeeflutterdeploy-production.up.railway.app';
 
-  // Method for login
+  //Method for login
 Future<UserModel> authenticate({required String email, required String password}) async {
-  final url = Uri.parse('$baseUrl/api/auth/login'); // Updated to match provided function
+  final url = Uri.parse('$baseUrl/api/auth/login');
+  print('Attempting to authenticate user with email: $email');
 
   final response = await http.post(
     url,
@@ -20,22 +21,27 @@ Future<UserModel> authenticate({required String email, required String password}
     }),
   );
 
+  print('Response status: ${response.statusCode}');
+  print('Response body: ${response.body}');
+
   if (response.statusCode == 200) {
     var jsonResponse = json.decode(response.body);
-    print('response is ' + response.body);
+    print('Parsed JSON response: $jsonResponse');
 
-    // Ensure jsonResponse['status'] is not null and is a boolean
-    if (jsonResponse['status'] != null && jsonResponse['status'] is bool && jsonResponse['status']) {
-      // Use UserModel for further user handling
+    // Check if status exists and is boolean
+    if (jsonResponse.containsKey('status') && jsonResponse['status'] == true) {
+      print('Login successful, user data: ${jsonResponse['data']}');
       return UserModel.fromJson(jsonResponse['data']);
     } else {
-      // Handle cases where 'status' is not a boolean or is false
+      print('Login failed with message: ${jsonResponse['msg']}');
       throw Exception('Failed to login: ${jsonResponse['msg']}');
     }
   } else {
+    print('Failed to login with response: ${response.body}');
     throw Exception('Failed to login: ${response.body}');
   }
 }
+
 
 
   // Method for register
