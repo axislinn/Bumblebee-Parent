@@ -1,6 +1,8 @@
-import 'package:bumblebee/presentation/routes/generated_routes.dart';
+import 'package:bumblebee/blocc/bottom_nav_cubit.dart';
 import 'package:bumblebee/screens/splashscreen.dart';
+import 'package:bumblebee/widgets/main_wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // Adjust the import path if needed
 
 void main() {
@@ -17,8 +19,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: SplashScreen(), // Make sure this screen exists and is correctly implemented
-      initialRoute: '/',
-      onGenerateRoute: RouteGenerator().generateRoute,
+      home: BlocProvider(
+        create: (context) => BottomNavCubit(),
+        child: const MainWrapper(),
+      ),
     );
   }
 }
