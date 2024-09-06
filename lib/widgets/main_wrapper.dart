@@ -48,14 +48,17 @@ class _MainWrapperState extends State<MainWrapper> {
       body: _mainWrapperBody(),
       bottomNavigationBar: _mainWrapperBottomNavBar(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: _mainWrapperFab(),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 100),
+        child: _mainWrapperFab(),
+      ),
     );
   }
 
   ///bottom nav အပိုင်းမှာကို ဘာတွေ ပြပေးခြင်းတာ လုပ်ပေးထားတဲ့အပိုင်း
   BottomAppBar _mainWrapperBottomNavBar(BuildContext context) {
     return BottomAppBar(
-      color: Colors.black,
+      color: Colors.blueGrey,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
@@ -95,10 +98,6 @@ class _MainWrapperState extends State<MainWrapper> {
               ],
             ),
           ),
-          const SizedBox(
-            width: 80,
-            height: 20,
-          )
         ],
       ),
     );
