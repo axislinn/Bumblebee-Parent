@@ -2,9 +2,9 @@ import 'package:bumblebee/screens/home_screen.dart';
 import 'package:bumblebee/screens/signupscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bumblebee/bloc/bloc/login_bloc.dart';
-import 'package:bumblebee/bloc/bloc/login_event.dart';
-import 'package:bumblebee/bloc/bloc/login_state.dart';
+import 'package:bumblebee/bloc/login_bloc/login_bloc.dart';
+import 'package:bumblebee/bloc/login_bloc/login_event.dart';
+import 'package:bumblebee/bloc/login_bloc/login_state.dart';
 import 'package:bumblebee/data/repository/repositories/user_repository.dart';
 
 class LoginScreen extends StatelessWidget {
