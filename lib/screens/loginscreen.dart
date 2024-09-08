@@ -45,36 +45,20 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
-      // listener: (context, state) {
-      //   if (state is LoginSuccess) {
-      //     Navigator.of(context).pushReplacement(
-      //       MaterialPageRoute(builder: (context) => HomePage()),
-      //     );
-      //     ScaffoldMessenger.of(context).showSnackBar(
-      //       SnackBar(content: Text('Welcome, ${state.user.userName}!')),
-      //     );
-      //   } else if (state is LoginFailure) {
-      //     ScaffoldMessenger.of(context).showSnackBar(
-      //       SnackBar(content: Text('Login Failed: ${state.error}')),
-      //     );
-      //   }
-      // },
-        listener: (context, state) {
-  if (state is LoginSuccess) {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => HomePage()),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Welcome, ${state.user.userName}!')),
-    );
-  } else if (state is LoginFailure) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Login Failed: ${state.error}')),
-    );
-  }
-},
-
-
+          listener: (context, state) {
+    if (state is LoginSuccess) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Welcome, ${state.user.userName}!')),
+      );
+    } else if (state is LoginFailure) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login Failed: ${state.error}')),
+      );
+    }
+  },
 
       child: Padding(
         padding: const EdgeInsets.all(16.0),
