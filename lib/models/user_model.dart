@@ -2,18 +2,16 @@ class UserModel {
   final String id;
   final String userName;
   final String email;
-  final String password;
-  final String confirmedPassword;
+  final String profilePicture;
   final String phone;
-  final String roles;
-  final String relationship;
+  final List<String> roles;
+  final List<String> relationship;
 
   UserModel({
     required this.id,
     required this.userName,
     required this.email,
-    required this.password,
-    required this.confirmedPassword,
+    required this.profilePicture,
     required this.phone,
     required this.roles,
     required this.relationship,
@@ -22,25 +20,23 @@ class UserModel {
   // Convert a JSON map into a UserModel instance
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['id'] as String,
-      userName: json['userName'] as String,
-      email: json['email'] as String,
-      password: json['password'] as String,
-      confirmedPassword: json['confirmedPassword'] as String,
-      phone: json['phone'] as String,
-      roles: json['roles'] as String,
-      relationship: json['relationship'] as String,
+      id: json['_id'] ?? '', // Ensure _id is handled properly
+      userName: json['userName'] ?? 'Unknown', // Handle null or missing values
+      email: json['email'] ?? '',
+      profilePicture: json['profilePicture'] ?? '',
+      phone: json['phone'] ?? '',
+      roles: List<String>.from(json['roles'] ?? []), // Parse roles as List<String>
+      relationship: List<String>.from(json['relationship'] ?? []), // Parse relationship as List<String>
     );
   }
 
   // Convert a UserModel instance into a JSON map
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      '_id': id,
       'userName': userName,
       'email': email,
-      'password': password,
-      'confirmedPassword': confirmedPassword,
+      'profilePicture': profilePicture,
       'phone': phone,
       'roles': roles,
       'relationship': relationship,
