@@ -32,7 +32,7 @@ class _MainWrapperState extends State<MainWrapper> {
 
     // Initialize Drawer Navigation Bloc
     _drawerBloc = NavDrawerBloc();
-    //_content = _getContentForState(_drawerBloc.state.selectedItem);
+    _content = _getContentForDrawer(_drawerBloc.state.selectedItem);
   }
 
   @override
@@ -103,7 +103,7 @@ class _MainWrapperState extends State<MainWrapper> {
         appBar: _mainWrapperAppBar(),
         body: BlocConsumer<NavDrawerBloc, NavDrawerState>(
           listener: (context, state) {
-            // _content = _getContentForState(state.selectedItem);
+            _content = _getContentForDrawer(state.selectedItem);
           },
           buildWhen: (previous, current) {
             return previous.selectedItem != current.selectedItem;
@@ -278,6 +278,22 @@ class _MainWrapperState extends State<MainWrapper> {
         ),
       ),
     );
+  }
+
+  /// Get content for Drawer Items
+  Widget _getContentForDrawer(NavItem selectedItem) {
+    switch (selectedItem) {
+      case NavItem.homeView:
+        return const HomePage();
+      case NavItem.profileView:
+        return const ProfilePage();
+      case NavItem.setting:
+        return const FavoritePage();
+      case NavItem.signOut:
+        return const NotificationsPage();
+      default:
+        return Container();
+    }
   }
 }
 

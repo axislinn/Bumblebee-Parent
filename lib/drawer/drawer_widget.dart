@@ -42,14 +42,14 @@ class NavDrawerWidget extends StatelessWidget {
       IconlyBold.profile,
     ),
     _NavigationItem(
-      NavItem.orderView,
-      "Orders",
-      IconlyBold.category,
+      NavItem.setting,
+      "Settings",
+      IconlyBold.setting,
     ),
     _NavigationItem(
-      NavItem.cartView,
-      "Cart",
-      IconlyBold.bag_2,
+      NavItem.signOut,
+      "Sign Out",
+      IconlyBold.logout,
     ),
   ];
 
