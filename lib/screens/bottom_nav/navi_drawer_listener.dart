@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/navigation_drawer_bloc.dart';
-import './home_screen.dart';
-import 'feed_screen.dart';
-import 'info_screen.dart';
+import '../../bloc/nav_drawer/navigation_drawer_bloc.dart';
+import '../home/home_screen.dart';
+import '../home/feed_screen.dart';
+import '../home/info_screen.dart';
 
 class NavigationListener extends StatelessWidget {
   final Widget child;

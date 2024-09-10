@@ -1,5 +1,5 @@
-import 'package:bumblebee/screens/home_screen.dart';
-import 'package:bumblebee/screens/signupscreen.dart';
+import 'package:bumblebee/screens/home/home_screen.dart';
+import 'package:bumblebee/screens/auth/signupscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bumblebee/bloc/login_bloc/login_bloc.dart';

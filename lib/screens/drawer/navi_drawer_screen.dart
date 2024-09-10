@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/navigation_drawer_bloc.dart';
+import '../../bloc/nav_drawer/navigation_drawer_bloc.dart';
 
 class NaviDrawer extends StatelessWidget {
   const NaviDrawer({super.key});

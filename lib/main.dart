@@ -1,5 +1,5 @@
-import 'package:bumblebee/screens/home_screen.dart';
-import 'package:bumblebee/screens/splashscreen.dart';
+import 'package:bumblebee/screens/home/home_screen.dart';
+import 'package:bumblebee/screens/auth/splashscreen.dart';
 import 'package:flutter/material.dart';
  // Adjust the import path if needed
 
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(), // Make sure this screen exists and is correctly implemented
+      home: SplashScreen(), // Make sure this screen exists and is correctly implemented
     );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:bumblebee/screens/loginscreen.dart';
+import 'package:bumblebee/screens/auth/loginscreen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
