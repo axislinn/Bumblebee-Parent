@@ -1,41 +1,31 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../models/navigation_drawer_model.dart';
+import 'package:equatable/equatable.dart';
+import 'package:bloc/bloc.dart';
 
-enum NavigationEvent { feed, joinClass, settings, info }
+// Event
+abstract class NavigationEvent extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
+class NavigateToFeed extends NavigationEvent {}
+class NavigateToJoinClass extends NavigationEvent {}
+class NavigateToSettings extends NavigationEvent {}
+class NavigateToInfo extends NavigationEvent {}
 
-class NavigationBloc extends Bloc<NavigationEvent, List<NavigationItem>> {
-  NavigationBloc() : super([]) {
-    on<NavigationEvent>((event, emit) {
-      switch (event) {
-        case NavigationEvent.feed:
-            Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FeedPage()),
-              );
-          break;
-        case NavigationEvent.joinClass:
-          Navigator.push(
-                context,  
-                MaterialPageRoute(builder: (context) => JoinClassPage()),
-              );
-          break;
-        case NavigationEvent.settings:
-          // Handle navigation to Settings page
-          break;
-        case NavigationEvent.info:
-          // Handle navigation to Info page
-          break;
-      }
-    });
-  }
+// State
+abstract class NavigationState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
+class FeedPageState extends NavigationState {}
+class JoinClassPageState extends NavigationState {}
+class SettingsPageState extends NavigationState {}
+class InfoPageState extends NavigationState {}
 
-  List<NavigationItem> _loadNavigationItems() {
-    return [
-      NavigationItem(title: 'Feed', icon: Icons.home),
-      NavigationItem(title: 'Join Class', icon: Icons.group),
-      NavigationItem(title: 'Settings', icon: Icons.settings),
-      NavigationItem(title: 'Info', icon: Icons.info),
-    ];
+class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
+  NavigationBloc() : super(FeedPageState()) {
+    on<NavigateToFeed>((event, emit) => emit(FeedPageState()));
+    on<NavigateToJoinClass>((event, emit) => emit(JoinClassPageState()));
+    on<NavigateToSettings>((event, emit) => emit(SettingsPageState()));
+    on<NavigateToInfo>((event, emit) => emit(InfoPageState()));
   }
 }

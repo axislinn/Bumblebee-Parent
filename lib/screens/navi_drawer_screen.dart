@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/navigation_drawer_bloc.dart';
 
 class NaviDrawer extends StatelessWidget {
+  const NaviDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -11,7 +13,7 @@ class NaviDrawer extends StatelessWidget {
         children: <Widget>[
           const DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.purple,
+              color: Colors.white,
             ),
             child: Text(
               'Profile',
@@ -21,40 +23,40 @@ class NaviDrawer extends StatelessWidget {
               ),
             ),
           ),
+
           ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Feed'),
+            leading: const Icon(Icons.home),
+            title: const Text('Feed'),
             onTap: () {
+              BlocProvider.of<NavigationBloc>(context).add(NavigateToFeed());
               Navigator.pop(context);
-              BlocProvider.of<NavigationBloc>(context)
-                  .add(NavigationEvent.feed);
             },
           ),
+
           ListTile(
-            leading: Icon(Icons.group),
-            title: Text('Join Class'),
+            leading: const Icon(Icons.home),
+            title: const Text('Join Class'),
             onTap: () {
+              BlocProvider.of<NavigationBloc>(context).add(NavigateToJoinClass());
               Navigator.pop(context);
-              BlocProvider.of<NavigationBloc>(context)
-                  .add(NavigationEvent.joinClass);
             },
           ),
+
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
+            leading: const Icon(Icons.settings),
+            title: const Text('Settings'),
             onTap: () {
+              BlocProvider.of<NavigationBloc>(context).add(NavigateToSettings());
               Navigator.pop(context);
-              BlocProvider.of<NavigationBloc>(context)
-                  .add(NavigationEvent.settings);
             },
           ),
+
           ListTile(
-            leading: Icon(Icons.info),
-            title: Text('Info'),
+            leading: const Icon(Icons.info),
+            title: const Text('Info'),
             onTap: () {
+              BlocProvider.of<NavigationBloc>(context).add(NavigateToInfo());
               Navigator.pop(context);
-              BlocProvider.of<NavigationBloc>(context)
-                  .add(NavigationEvent.info);
             },
           ),
         ],
