@@ -10,14 +10,14 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
-      body: Center(
-        child: Text('Welcome to the Home Page!'),
-      ),
-    );
+        appBar: AppBar(
+          backgroundColor: Colors.grey,
+          title: Text('Home'),
+        ),
+        endDrawer: NaviDrawer(),
+        body: Center(
+          child: Text('Welcome to the Home Page!'),
+        ),
+        bottomNavigationBar: BottomNav());
   }
 }
-
-
