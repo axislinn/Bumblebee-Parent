@@ -2,9 +2,9 @@ import 'package:bumblebee/screens/home_screen.dart';
 import 'package:bumblebee/screens/signupscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bumblebee/bloc/bloc/login_bloc.dart';
-import 'package:bumblebee/bloc/bloc/login_event.dart';
-import 'package:bumblebee/bloc/bloc/login_state.dart';
+import 'package:bumblebee/bloc/login_bloc/login_bloc.dart';
+import 'package:bumblebee/bloc/login_bloc/login_event.dart';
+import 'package:bumblebee/bloc/login_bloc/login_state.dart';
 import 'package:bumblebee/data/repository/repositories/user_repository.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -26,27 +26,40 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
+  @override
+  _LoginFormState createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _emailController = TextEditingController();
-    final _passwordController = TextEditingController();
-
     return BlocListener<LoginBloc, LoginState>(
-      listener: (context, state) {
-        if (state is LoginSuccess) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => HomePage()),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Welcome, ${state.user.userName}!')),
-          );
-        } else if (state is LoginFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Login Failed: ${state.error}')),
-          );
-        }
-      },
+          listener: (context, state) {
+    if (state is LoginSuccess) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Welcome, ${state.user.userName}!')),
+      );
+    } else if (state is LoginFailure) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login Failed: ${state.error}')),
+      );
+    }
+  },
+
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
