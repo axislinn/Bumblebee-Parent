@@ -43,41 +43,63 @@ Future<UserModel> authenticate({required String email, required String password}
   }
 }
 
-  // Method for register
-  Future<UserModel> register({
-    required String userName,
-    required String email,
-    required String password,
-    required String confirmedPassword,
-    required String phone,
-    required String roles,
-    required String relationship,
-  }) async {
-    final url = Uri.parse('$baseUrl/api/auth/register'); // Updated to match provided function
-    
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'userName': userName,
-        'email': email,
-        'password': password,
-        'confirmedPassword': confirmedPassword,
-        'phone': phone,
-        'roles': roles,
-        'relationship': relationship,
-      }),
-    );
+//mwthod for sign up
+Future<UserModel> register({
+  required String userName,
+  required String email,
+  required String password,
+  required String confirmedPassword,
+  required String phone,
+  required String roles,
+  required String relationship,
+}) async {
+  final url = Uri.parse('$baseUrl/api/auth/register');
+  
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: json.encode({
+      'userName': userName,
+      'email': email,
+      'password': password,
+      'confirmedPassword': confirmedPassword,
+      'phone': phone,
+      'roles': roles,
+      'relationship': relationship,
+    }),
+  );
 
-    if (response.statusCode == 200) {
-      var jsonResponse = json.decode(response.body);
-      if (jsonResponse['status']) {
-        return UserModel.fromJson(jsonResponse['data']);
+  // Print response details for debugging
+  print('Response status: ${response.statusCode}');
+  print('Response body: ${response.body}');
+
+  // Parse the response
+  var jsonResponse = json.decode(response.body);
+
+  // Print parsed JSON for further inspection
+  print('Parsed JSON response: $jsonResponse');
+
+  if (response.statusCode == 200) {
+    // Check if `con` field exists and is a boolean
+    bool success = jsonResponse['con'] ?? false;
+    if (success) {
+      // Handle successful registration
+      var result = jsonResponse['result'];
+      if (result != null && result['user'] != null) {
+        // Assuming UserModel.fromJson handles the `user` part of the result
+        return UserModel.fromJson(result['user']);
       } else {
-        throw Exception('Failed to register: ${jsonResponse['message']}');
+        throw Exception('Failed to register: No user data found in response');
       }
     } else {
-      throw Exception('Failed to register user: ${response.body}');
+      // Handle failure scenario based on `msg`
+      String message = jsonResponse['msg'] ?? 'Unknown error occurred';
+      throw Exception('Failed to register: $message');
     }
+  } else {
+    // Handle non-200 responses
+    throw Exception('HTTP error: ${response.statusCode}, ${response.body}');
   }
+}
+
 }

@@ -2,9 +2,9 @@ import '../home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import '../info_screen.dart';
-import '../join_class_screen.dart';
-import '../options_screen.dart';
+import 'drawer/info_screen.dart';
+import 'drawer/join_class_screen.dart';
+import 'drawer/options_screen.dart';
 
 class NaviDrawer extends StatefulWidget {
   const NaviDrawer({super.key});
