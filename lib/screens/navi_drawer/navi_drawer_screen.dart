@@ -68,8 +68,10 @@ class _NaviDrawerState extends State<NaviDrawer> {
               Navigator.pop(context);
               Navigator.of(context).pushAndRemoveUntil(
                 PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
-                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      HomePage(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
                     return child;
                   },
                 ),
@@ -84,8 +86,10 @@ class _NaviDrawerState extends State<NaviDrawer> {
               Navigator.pop(context);
               Navigator.of(context).pushAndRemoveUntil(
                 PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) => const JoinClassPage(),
-                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      const JoinClassPage(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
                     return child;
                   },
                 ),
@@ -100,8 +104,10 @@ class _NaviDrawerState extends State<NaviDrawer> {
               Navigator.pop(context);
               Navigator.of(context).pushAndRemoveUntil(
                 PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) => const Settings(),
-                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      const Settings(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
                     return child;
                   },
                 ),
@@ -116,8 +122,10 @@ class _NaviDrawerState extends State<NaviDrawer> {
               Navigator.pop(context);
               Navigator.of(context).pushAndRemoveUntil(
                 PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) => const InfoPage(),
-                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      const InfoPage(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
                     return child;
                   },
                 ),
