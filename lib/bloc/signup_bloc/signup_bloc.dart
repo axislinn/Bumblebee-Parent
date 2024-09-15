@@ -29,7 +29,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         password: event.password,
         confirmedPassword: event.confirmPassword,
         phone: event.phone,
-        roles: event.roles,
         relationship: event.relationship,
       );
 
