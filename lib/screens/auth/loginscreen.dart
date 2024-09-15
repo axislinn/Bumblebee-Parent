@@ -60,40 +60,42 @@ class _LoginFormState extends State<LoginForm> {
     }
   },
 
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                BlocProvider.of<LoginBloc>(context).add(
-                  LoginButtonPressed(
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                  ),
-                );
-              },
-              child: Text('Login'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => RegisterScreen()),
-                );
-              },
-              child: Text('Register'),
-            ),
-          ],
+      child: SingleChildScrollView(  // Added SingleChildScrollView
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              TextField(
+                controller: _emailController,
+                decoration: InputDecoration(labelText: 'Email'),
+              ),
+              TextField(
+                controller: _passwordController,
+                decoration: InputDecoration(labelText: 'Password'),
+                obscureText: true,
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  BlocProvider.of<LoginBloc>(context).add(
+                    LoginButtonPressed(
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                    ),
+                  );
+                },
+                child: Text('Login'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => RegisterScreen()),
+                  );
+                },
+                child: Text('Register'),
+              ),
+            ],
+          ),
         ),
       ),
     );
