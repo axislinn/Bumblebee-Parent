@@ -66,10 +66,10 @@ class RegisterScreen extends StatelessWidget {
                   controller: _phoneController,
                   decoration: InputDecoration(labelText: 'Phone'),
                 ),
-                TextField(
-                  controller: _rolesController,
-                  decoration: InputDecoration(labelText: 'Roles'),
-                ),
+                // TextField(
+                //   controller: _rolesController,
+                //   decoration: InputDecoration(labelText: 'Roles'),
+                // ),
                 TextField(
                   controller: _relationshipController,
                   decoration: InputDecoration(labelText: 'Relationship'),
@@ -88,7 +88,7 @@ class RegisterScreen extends StatelessWidget {
                             password: _passwordController.text,
                             confirmPassword: _confirmPasswordController.text,
                             phone: _phoneController.text,
-                            roles: _rolesController.text,
+                            // roles: _rolesController.text,
                             relationship: _relationshipController.text,
                           ),
                         );
