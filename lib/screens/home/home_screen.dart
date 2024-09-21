@@ -1,3 +1,4 @@
+import 'package:bumblebee/screens/bottom_nav/bottom_nav.dart';
 import 'package:bumblebee/screens/bottom_nav/bottom_nav_page/chat_page.dart';
 import 'package:bumblebee/screens/bottom_nav/bottom_nav_page/class_page.dart';
 import 'package:bumblebee/screens/bottom_nav/bottom_nav_page/notification_page.dart';
@@ -29,9 +30,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey,
-        title: Text(_titles[_selectedIndex]),
+        title: Text(_titles[_selectedIndex]), // Dynamic title
       ),
-      endDrawer: NaviDrawer(),
+      endDrawer: const NaviDrawer(),
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {
@@ -39,36 +40,16 @@ class _HomePageState extends State<HomePage> {
             _selectedIndex = index; // Update selected tab based on page swipe
           });
         },
-        children: [
+        children: const [
           Center(child: Text('Welcome to the Home Page!')), // HomePage content
           ChatPage(),
           NotificationPage(),
           ClassPage(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped, // Handles tab changes
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notification',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.class_rounded),
-            label: 'Class',
-          ),
-        ],
-        selectedItemColor: Colors.blueAccent,
-        unselectedItemColor: Colors.grey,
+      bottomNavigationBar: BottomNav(
+        selectedIndex: _selectedIndex, // Pass selectedIndex
+        onItemTapped: _onItemTapped, // Pass the tap handler
       ),
     );
   }
