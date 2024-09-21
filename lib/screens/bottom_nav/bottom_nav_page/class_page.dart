@@ -6,9 +6,6 @@ class ClassPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Class"),
-      ),
       body: Center(
         child: Text('This Page is Class Page.'),
       ),
