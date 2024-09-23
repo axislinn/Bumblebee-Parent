@@ -1,13 +1,138 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../bloc/join_class_bloc/join_class_bloc.dart';
+import '../../../../bloc/join_class_bloc/join_class_state.dart';
+import '../../../../bloc/join_class_bloc/join_class_event.dart';
+import '../../../../data/repository/repositories/join_class_repository.dart';
 
 class JoinClassPage extends StatelessWidget {
-  const JoinClassPage({super.key});
+  final JoinClassBloc joinClassBloc =
+      JoinClassBloc(joinclassRepository: JoinClassRepository());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Join Class')),
-      body: const Center(child: Text('Join Class Screen')),
+      appBar: AppBar(
+        title: const Text('Join Class'),
+      ),
+      body: BlocProvider(
+        create: (context) => joinClassBloc,
+        child: JoinClassForm(),
+      ),
     );
   }
 }
+
+// Join Class Form
+class JoinClassForm extends StatefulWidget {
+  @override
+  _JoinClassFormState createState() => _JoinClassFormState();
+}
+
+class _JoinClassFormState extends State<JoinClassForm> {
+  final _classCodeController = TextEditingController();
+  final _childNameController = TextEditingController();
+  final _studentDOBController = TextEditingController();
+
+  DateTime? selectedDate;
+  bool _isLoading = false;  // To track loading state
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<JoinClassBloc, JoinClassState>(
+      listener: (context, state) {
+        if (state is JoinClassSuccess) {
+          setState(() {
+            _isLoading = false;  // End loading state
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Joined class successfully')));
+        } else if (state is JoinClassFailure) {
+          setState(() {
+            _isLoading = false;  // End loading state
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Failed to join class: ${state.error}')));
+        }
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _classCodeController,
+              decoration: const InputDecoration(labelText: 'Class Code'),
+            ),
+            TextField(
+              controller: _childNameController,
+              decoration: const InputDecoration(labelText: 'Child Name'),
+            ),
+            TextFormField(
+              controller: _studentDOBController,
+              decoration: const InputDecoration(
+                labelText: 'Date of Birth',
+                suffixIcon: Icon(Icons.calendar_today),
+              ),
+              onTap: () async {
+                FocusScope.of(context).requestFocus(FocusNode());
+                final DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: selectedDate ?? DateTime.now(),
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime.now(),
+                );
+                if (pickedDate != null) {
+                  setState(() {
+                    selectedDate = pickedDate;
+                    _studentDOBController.text =
+                        "${pickedDate.toLocal()}".split(' ')[0];
+                  });
+                }
+              },
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _isLoading
+                  ? null
+                  : () {
+                      final classCode = _classCodeController.text;
+                      final childName = _childNameController.text;
+
+                      DateTime? studentDOB;
+                      if (_studentDOBController.text.isNotEmpty) {
+                        studentDOB = DateTime.parse(_studentDOBController.text);
+                      }
+
+                      if (studentDOB != null) {
+                        setState(() {
+                          _isLoading = true;  // Start loading state
+                        });
+                        context.read<JoinClassBloc>().add(JoinButtonPressed(
+                          classCode: classCode,
+                          childName: childName,
+                          studentDOB: selectedDate!,
+                        ));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Please select a valid date of birth')),
+                        );
+                      }
+                    },
+              child: _isLoading
+                  ? SizedBox(
+                      height: 16,
+                      width: 16,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : const Text('Join'),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+

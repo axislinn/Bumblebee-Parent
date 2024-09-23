@@ -50,7 +50,6 @@ Future<UserModel> register({
   required String password,
   required String confirmedPassword,
   required String phone,
-  required String roles,
   required String relationship,
 }) async {
   final url = Uri.parse('$baseUrl/api/auth/register');
@@ -64,7 +63,7 @@ Future<UserModel> register({
       'password': password,
       'confirmedPassword': confirmedPassword,
       'phone': phone,
-      'roles': roles,
+      'roles': 'guardian',
       'relationship': relationship,
     }),
   );

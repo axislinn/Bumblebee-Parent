@@ -12,7 +12,6 @@ class RegisterScreen extends StatelessWidget {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _rolesController = TextEditingController();
   final TextEditingController _relationshipController = TextEditingController();
 
   @override
@@ -67,10 +66,7 @@ class RegisterScreen extends StatelessWidget {
                     controller: _phoneController,
                     decoration: InputDecoration(labelText: 'Phone'),
                   ),
-                  TextField(
-                    controller: _rolesController,
-                    decoration: InputDecoration(labelText: 'Roles'),
-                  ),
+                  
                   TextField(
                     controller: _relationshipController,
                     decoration: InputDecoration(labelText: 'Relationship'),
@@ -89,7 +85,6 @@ class RegisterScreen extends StatelessWidget {
                               password: _passwordController.text,
                               confirmPassword: _confirmPasswordController.text,
                               phone: _phoneController.text,
-                              roles: _rolesController.text,
                               relationship: _relationshipController.text,
                             ),
                           );
