@@ -39,63 +39,73 @@ class RegisterScreen extends StatelessWidget {
               );
             }
           },
-          child: SingleChildScrollView(  // Wrap Column inside SingleChildScrollView
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  TextField(
-                    controller: _userNameController,
-                    decoration: InputDecoration(labelText: 'User Name'),
-                  ),
-                  TextField(
-                    controller: _emailController,
-                    decoration: InputDecoration(labelText: 'Email'),
-                  ),
-                  TextField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(labelText: 'Password'),
-                    obscureText: true,
-                  ),
-                  TextField(
-                    controller: _confirmPasswordController,
-                    decoration: InputDecoration(labelText: 'Confirm Password'),
-                    obscureText: true,
-                  ),
-                  TextField(
-                    controller: _phoneController,
-                    decoration: InputDecoration(labelText: 'Phone'),
-                  ),
-                  
-                  TextField(
-                    controller: _relationshipController,
-                    decoration: InputDecoration(labelText: 'Relationship'),
-                  ),
-                  SizedBox(height: 20),
-                  Builder(
-                    builder: (context) {
-                      return ElevatedButton(
-                        onPressed: () {
-                          // Now the context inside this Builder will have access to the RegisterBloc
-                          final registerBloc = BlocProvider.of<RegisterBloc>(context);
-                          registerBloc.add(
+           child: BlocBuilder<RegisterBloc, RegisterState>(
+            builder: (context, state) {
+              bool isButtonDisabled = state is RegisterLoading;
+
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                TextField(
+                  controller: _userNameController,
+                  decoration: InputDecoration(labelText: 'User Name'),
+                ),
+                TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(labelText: 'Email'),
+                ),
+                TextField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(labelText: 'Password'),
+                  obscureText: true,
+                ),
+                TextField(
+                  controller: _confirmPasswordController,
+                  decoration: InputDecoration(labelText: 'Confirm Password'),
+                  obscureText: true,
+                ),
+                TextField(
+                  controller: _phoneController,
+                  decoration: InputDecoration(labelText: 'Phone'),
+                ),
+                TextField(
+                  controller: _relationshipController,
+                  decoration: InputDecoration(labelText: 'Relationship'),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                        onPressed: isButtonDisabled
+                            ? null
+                            : () {
+                                final registerBloc = BlocProvider.of<RegisterBloc>(context);
+                                registerBloc.add(
                             RegisterButtonPressed(
-                              userName: _userNameController.text,
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                              confirmPassword: _confirmPasswordController.text,
-                              phone: _phoneController.text,
-                              relationship: _relationshipController.text,
-                            ),
-                          );
-                        },
-                        child: Text('Register'),
-                      );
-                    },
+                            userName: _userNameController.text,
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            confirmPassword: _confirmPasswordController.text,
+                            phone: _phoneController.text,
+                            relationship: _relationshipController.text,
+                          ),
+                        );
+                      },
+                      child: isButtonDisabled
+                            ? SizedBox(
+                                height: 16,
+                                width: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : Text('Register'),  // Display the role in the button
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
         ),
       ),

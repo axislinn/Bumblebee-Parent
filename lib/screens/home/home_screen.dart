@@ -9,7 +9,6 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.grey,
           title: Text('Home'),
         ),
         endDrawer: const NaviDrawer(),

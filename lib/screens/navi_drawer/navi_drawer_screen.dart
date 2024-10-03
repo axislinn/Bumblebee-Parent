@@ -16,15 +16,15 @@ class NaviDrawer extends StatefulWidget {
 class _NaviDrawerState extends State<NaviDrawer> {
   File? _profileImage;
 
-  Future<void> _pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      setState(() {
-        _profileImage = File(image.path);
-      });
-    }
-  }
+  // Future<void> _pickImage() async {
+  //   final ImagePicker picker = ImagePicker();
+  //   final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+  //   if (image != null) {
+  //     setState(() {
+  //       _profileImage = File(image.path);
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

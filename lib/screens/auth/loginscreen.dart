@@ -35,6 +35,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isButtonDisabled = false;
 
   @override
   void dispose() {
@@ -46,22 +47,31 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
-          listener: (context, state) {
-    if (state is LoginSuccess) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Welcome, ${state.user.userName}!')),
-      );
-    } else if (state is LoginFailure) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login Failed: ${state.error}')),
-      );
-    }
-  },
-
-      child: SingleChildScrollView(  // Added SingleChildScrollView
+      listener: (context, state) {
+        if (state is LoginSuccess) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Welcome, ${state.user.userName}!')),
+          );
+          setState(() {
+            _isButtonDisabled = false;
+          });
+        } else if (state is LoginFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Login Failed: ${state.error}')),
+          );
+          setState(() {
+            _isButtonDisabled = false;
+          });
+        } else if (state is LoginLoading) {
+          setState(() {
+            _isButtonDisabled = true;
+          });
+        }
+      },
+      child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -77,15 +87,25 @@ class _LoginFormState extends State<LoginForm> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  BlocProvider.of<LoginBloc>(context).add(
-                    LoginButtonPressed(
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                    ),
-                  );
-                },
-                child: Text('Login'),
+                onPressed: _isButtonDisabled
+                    ? null
+                    : () {
+                        BlocProvider.of<LoginBloc>(context).add(
+                          LoginButtonPressed(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          ),
+                        );
+                      },
+                child: _isButtonDisabled
+                    ? SizedBox(
+                        height: 16,
+                        width: 16,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : Text('Login'),
               ),
               TextButton(
                 onPressed: () {
@@ -102,3 +122,5 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 }
+
+

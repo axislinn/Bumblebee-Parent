@@ -11,7 +11,6 @@ class RegisterButtonPressed extends RegisterEvent {
   final String password;
   final String confirmPassword;
   final String phone;
-  
   final String relationship;
 
   RegisterButtonPressed({
@@ -20,7 +19,6 @@ class RegisterButtonPressed extends RegisterEvent {
     required this.password,
     required this.confirmPassword,
     required this.phone,
-    
     required this.relationship,
   });
 
