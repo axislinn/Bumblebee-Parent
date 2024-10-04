@@ -67,7 +67,6 @@ Future<UserModel> authenticate({required String email, required String password}
         'relationship': relationship,
       }),
     );
-=======
 
   // Print response details for debugging
   print('Response status: ${response.statusCode}');
