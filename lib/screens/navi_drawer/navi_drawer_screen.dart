@@ -1,3 +1,6 @@
+import 'package:bumblebee/screens/auth/loginscreen.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import '../home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,6 +18,7 @@ class NaviDrawer extends StatefulWidget {
 
 class _NaviDrawerState extends State<NaviDrawer> {
   File? _profileImage;
+   final FlutterSecureStorage storage = FlutterSecureStorage();
 
   // Future<void> _pickImage() async {
   //   final ImagePicker picker = ImagePicker();
@@ -25,6 +29,13 @@ class _NaviDrawerState extends State<NaviDrawer> {
   //     });
   //   }
   // }
+
+  void _signOut() async {
+    await storage.delete(key: 'userToken'); 
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => LoginScreen()), 
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +136,15 @@ class _NaviDrawerState extends State<NaviDrawer> {
               );
             },
           ),
+                    const Divider(height: 10,), 
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text('Sign Out'),
+            onTap: () {
+
+              _signOut(); 
+            },
+          )
         ],
       ),
     );

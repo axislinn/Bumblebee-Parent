@@ -1,8 +1,9 @@
+import 'package:bumblebee/bloc/join_class_bloc/join_class_bloc.dart';
+import 'package:bumblebee/bloc/join_class_bloc/join_class_event.dart';
+import 'package:bumblebee/bloc/join_class_bloc/join_class_state.dart';
+import 'package:bumblebee/screens/navi_drawer/class_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../bloc/join_class_bloc/join_class_bloc.dart';
-import '../../../../bloc/join_class_bloc/join_class_state.dart';
-import '../../../../bloc/join_class_bloc/join_class_event.dart';
 import '../../../../data/repository/repositories/join_class_repository.dart';
 
 class JoinClassPage extends StatelessWidget {
@@ -42,15 +43,13 @@ class _JoinClassFormState extends State<JoinClassForm> {
     return BlocListener<JoinClassBloc, JoinClassState>(
       listener: (context, state) {
         if (state is JoinClassSuccess) {
-          setState(() {
-            _isLoading = false;  // End loading state
-          });
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Joined class successfully')));
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ClassListPage()),
+          );
         } else if (state is JoinClassFailure) {
-          setState(() {
-            _isLoading = false;  // End loading state
-          });
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Failed to join class: ${state.error}')));
         }

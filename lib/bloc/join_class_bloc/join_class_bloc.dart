@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:bumblebee/data/repository/repositories/join_class_repository.dart';
 import 'join_class_event.dart';
 import 'join_class_state.dart';
-import '../../data/repository/repositories/join_class_repository.dart';
+
 
 class JoinClassBloc extends Bloc<JoinClassEvent, JoinClassState> {
   final JoinClassRepository joinclassRepository;

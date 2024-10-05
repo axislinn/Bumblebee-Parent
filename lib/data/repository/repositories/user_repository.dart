@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:bumblebee/models/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserRepository {
   final String baseUrl = 'https://bumblebeeflutterdeploy-production.up.railway.app';
@@ -31,6 +32,11 @@ Future<UserModel> authenticate({required String email, required String password}
     if (jsonResponse.containsKey('con') && jsonResponse['con'] == true) {
       print('Login successful, user data: ${jsonResponse['result']['userInfo']}');
       
+      String token = jsonResponse['result']['token'];
+       print('Bearer Token: $token');
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('userToken', token);
+
       // Pass the correct userInfo object to the UserModel
       return UserModel.fromJson(jsonResponse['result']['userInfo']);
     } else {
