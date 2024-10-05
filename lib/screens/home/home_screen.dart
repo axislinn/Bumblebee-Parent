@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.grey,
+          automaticallyImplyLeading: false,
           title: Text('Home'),
         ),
         endDrawer: const NaviDrawer(),
