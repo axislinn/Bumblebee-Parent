@@ -39,6 +39,7 @@ class RegisterScreen extends StatelessWidget {
               );
             }
           },
+
            child: BlocBuilder<RegisterBloc, RegisterState>(
             builder: (context, state) {
               bool isButtonDisabled = state is RegisterLoading;
@@ -48,6 +49,12 @@ class RegisterScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
+
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+
                 TextField(
                   controller: _userNameController,
                   decoration: InputDecoration(labelText: 'User Name'),
@@ -70,11 +77,19 @@ class RegisterScreen extends StatelessWidget {
                   controller: _phoneController,
                   decoration: InputDecoration(labelText: 'Phone'),
                 ),
+
+
+                // TextField(
+                //   controller: _rolesController,
+                //   decoration: InputDecoration(labelText: 'Roles'),
+                // ),
+
                 TextField(
                   controller: _relationshipController,
                   decoration: InputDecoration(labelText: 'Relationship'),
                 ),
                 SizedBox(height: 20),
+
                 ElevatedButton(
                         onPressed: isButtonDisabled
                             ? null
@@ -82,15 +97,29 @@ class RegisterScreen extends StatelessWidget {
                                 final registerBloc = BlocProvider.of<RegisterBloc>(context);
                                 registerBloc.add(
                             RegisterButtonPressed(
+
+                Builder(
+                  builder: (context) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        // Now the context inside this Builder will have access to the RegisterBloc
+                        final registerBloc = BlocProvider.of<RegisterBloc>(context);
+                        registerBloc.add(
+                          RegisterButtonPressed(
+
                             userName: _userNameController.text,
                             email: _emailController.text,
                             password: _passwordController.text,
                             confirmPassword: _confirmPasswordController.text,
                             phone: _phoneController.text,
+
+                            // roles: _rolesController.text,
+
                             relationship: _relationshipController.text,
                           ),
                         );
                       },
+
                       child: isButtonDisabled
                             ? SizedBox(
                                 height: 16,
@@ -106,6 +135,13 @@ class RegisterScreen extends StatelessWidget {
                 ),
               );
             },
+
+                      child: Text('Register'),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
